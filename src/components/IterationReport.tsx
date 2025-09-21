@@ -10,6 +10,15 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { cn } from '../lib/utils';
 
+interface Issue {
+  id: number;
+  iid: number;
+  title: string;
+  web_url: string;
+  state: string;
+  labels: string[];
+}
+
 interface AssigneeSummary {
   assignee: string;
   issues: Array<{ title: string; state: string; web_url: string }>;
@@ -58,14 +67,14 @@ const IterationReport = () => {
         new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
       );
       setIterations(sortedData);
-    } catch (err: any) {
-      setMessage(err.message || 'Failed to load iterations');
+    } catch (err: unknown) {
+      setMessage((err as Error).message || 'Failed to load iterations');
     } finally {
       setLoading(false);
     }
   }, [projectId, groupId]);
 
-  const groupIssuesByAssignee = (issues: any[]): AssigneeSummary[] => {
+  const groupIssuesByAssignee = (issues: Issue[]): AssigneeSummary[] => {
     const assigneeMap = new Map<string, Array<{ title: string; state: string; web_url: string }>>();
     
     issues.forEach(issue => {
@@ -167,7 +176,7 @@ const IterationReport = () => {
       setAssigneeSummaries(grouped);
       
       const listMarkdown = issues
-        .map((i: any) => `- ${i.state === 'closed' ? '✅' : '🟢'} [${i.title}](${i.web_url})`)
+        .map((i: Issue) => `- ${i.state === 'closed' ? '✅' : '🟢'} [${i.title}](${i.web_url})`)
         .join('\n');
       setSelectedIteration(iteration);
       
@@ -189,8 +198,8 @@ const IterationReport = () => {
       iterationInfo += `### All Issues:\n${listMarkdown}`;
       setSummary(iterationInfo);
       
-    } catch (err: any) {
-      setMessage(err.message || 'Failed to load issues / summary');
+    } catch (err: unknown) {
+      setMessage((err as Error).message || 'Failed to load issues / summary');
     } finally {
       setLoading(false);
     }
@@ -248,8 +257,8 @@ const IterationReport = () => {
       
       setMessage(prev => `${prev ? prev + ' | ' : ''}Linked ${linkedCount} issues to report #${reportIid}`);
       
-    } catch (err: any) {
-      setMessage(err.message || 'Failed to create/update report issue');
+    } catch (err: unknown) {
+      setMessage((err as Error).message || 'Failed to create/update report issue');
     } finally {
       setLoading(false);
     }

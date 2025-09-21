@@ -12,6 +12,19 @@ export interface EpicDraft {
   description: string;
 }
 
+interface StoredSettings {
+  geminiApiKey?: string;
+  geminiModel?: string;
+  openaiApiKey?: string;
+  openaiBaseUrl?: string;
+  openaiModel?: string;
+}
+
+export interface EpicDraft {
+  title: string;
+  description: string;
+}
+
 export type AIBackend = 'openai' | 'gemini';
 
 export async function generateIssue(
@@ -90,11 +103,11 @@ async function callLLM(
 }
 
 
-function getStoredSettings(): any {
+function getStoredSettings(): StoredSettings | null {
   try {
     const raw = localStorage.getItem('ease-gitlab-settings');
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as { state?: any };
+    const parsed = JSON.parse(raw) as { state?: StoredSettings };
     return parsed.state ?? parsed;
   } catch {
     return null;

@@ -43,8 +43,8 @@ const EpicCreator = () => {
       try {
         const data = await gitlabService.fetchLabels(groupId);
         setLabels(data);
-      } catch (e: any) {
-        setMessage(e.message || 'Failed to fetch labels');
+      } catch (e: unknown) {
+        setMessage((e as Error).message || 'Failed to fetch labels');
       }
     };
     fetch();
@@ -90,8 +90,8 @@ const EpicCreator = () => {
       const { title: aiTitle, description: aiDesc } = res;
       setTitle(aiTitle);
       setDescription(aiDesc);
-    } catch (e: any) {
-      setMessage(e.message || 'Failed to generate');
+    } catch (e: unknown) {
+      setMessage((e as Error).message || 'Failed to generate');
     } finally {
       setLoading(false);
     }
@@ -113,8 +113,8 @@ const EpicCreator = () => {
       const res = await gitlabService.createEpic(groupId, fullTitle, description, selectedLabels, parentEpic?.id,enableEpic);
       setMessage(`Epic created: ${res.web_url}`);
     setCreatedEpic({ iid: res.iid, url: res.web_url });
-    } catch (e: any) {
-      setMessage(e.message || 'Failed to create epic');
+    } catch (e: unknown) {
+      setMessage((e as Error).message || 'Failed to create epic');
     } finally {
       setLoading(false);
     }

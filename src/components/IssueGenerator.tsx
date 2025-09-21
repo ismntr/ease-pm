@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { generateIssue } from '../services/aiService';
 import gitlabService from '../services/gitlabService';
 import { useLabelStore, filterLabelsByKeywords } from '../store/useLabelStore';
@@ -34,7 +34,7 @@ const IssueGenerator = () => {
     if (projectId && labels.length === 0) {
       fetchLabels();
     }
-  }, [projectId, labels.length]); // Added labels.length as dependency
+  }, [projectId, labels.length, fetchLabels]);
 
   const debouncedSearchEpics = useMemo(
     () =>
@@ -96,15 +96,15 @@ const IssueGenerator = () => {
 
       setDraftTitle(title);
       setDraftDescription(fullDescription);
-    } catch (err: any) {
-      setMessage(err.message || 'Failed to generate');
+    } catch (err: unknown) {
+      setMessage((err as Error).message || 'Failed to generate');
     } finally {
       setLoading(false);
     }
   };
 
 
-  const fetchLabels = async () => {
+  const fetchLabels = useCallback(async () => {
     if (labels.length > 0) return; // already have labels
 
     if (!projectId) return;
@@ -112,12 +112,12 @@ const IssueGenerator = () => {
     try {
       const data = await gitlabService.fetchLabels(projectId);
       setLabels(data);
-    } catch (err: any) {
-      setMessage(err.message || 'Failed to fetch labels');
+    } catch (err: unknown) {
+      setMessage((err as Error).message || 'Failed to fetch labels');
     } finally {
       setLoading(false);
     }
-  };
+  }, [labels.length, projectId, setLabels]);
 
   const handleCreateIssue = async () => {
     if (!projectId) {
@@ -137,16 +137,16 @@ const IssueGenerator = () => {
       if (enableEpic && selectedEpic) {
         try {
           await gitlabService.addIssueToEpic(groupId!, selectedEpic.iid!, projectId, res.id);
-        } catch (err: any) {
+        } catch (err: unknown) {
           console.error(err);
-          setMessage(`Issue created but failed to link epic: ${err.message}`);
+          setMessage(`Issue created but failed to link epic: ${(err as Error).message}`);
           return;
         }
       }
       setMessage(`Issue created: ${res.web_url}`);
       setCreatedIssue({ iid: res.iid, url: res.web_url });
-    } catch (err: any) {
-      setMessage(err.message || 'Failed to create issue');
+    } catch (err: unknown) {
+      setMessage((err as Error).message || 'Failed to create issue');
     } finally {
       setLoading(false);
     }
