@@ -22,7 +22,7 @@ vi.mock('../../store/useLabelStore', () => ({
     keywords: '',
     setKeywords: vi.fn(),
   }),
-  filterLabelsByKeywords: vi.fn((labels, keywords) => labels),
+  filterLabelsByKeywords: vi.fn((labels, _keywords) => labels),
 }));
 
 const mockSettingsStore = {

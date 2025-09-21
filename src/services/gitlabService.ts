@@ -1,4 +1,4 @@
-import { Gitlab } from '@gitbeaker/browser';
+import { Gitlab } from '@gitbeaker/rest';
 import { useGitlabAuth } from '../store/useGitlabAuth';
 import { useSettingsStore } from '../store/useSettingsStore';
 

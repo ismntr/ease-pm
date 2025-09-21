@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Gitlab } from '@gitbeaker/browser';
+import { Gitlab } from '@gitbeaker/rest';
 import { useSettingsStore } from './useSettingsStore';
 
 const getGitlabHost = () => useSettingsStore.getState().gitlabHost || import.meta.env.VITE_GITLAB_HOST || 'https://gitlab.com';
