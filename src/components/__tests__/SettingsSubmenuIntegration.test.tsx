@@ -97,7 +97,7 @@ describe('Settings Submenu Integration', () => {
     mockSidebarStore.isCollapsed = false;
     const { rerender } = render(<Sidebar {...defaultProps} />);
 
-    let submenuContainer = document.querySelector('.ml-4.space-y-1');
+    const submenuContainer = document.querySelector('.ml-4.space-y-1');
     expect(submenuContainer).toBeInTheDocument();
 
     mockSidebarStore.isCollapsed = true;

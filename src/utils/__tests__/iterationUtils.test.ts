@@ -30,7 +30,7 @@ describe('formatIterationName', () => {
   describe('when iteration has no title or empty title', () => {
     it('should return date range when title is null', () => {
       const iteration = createMockIteration({ 
-        title: null as any,
+        title: null,
         start_date: '2024-01-01',
         due_date: '2024-01-14'
       });
@@ -110,8 +110,8 @@ describe('formatIterationName', () => {
       const iteration = createMockIteration({ 
         id: 789,
         title: '',
-        start_date: null as any,
-        due_date: null as any
+        start_date: null,
+        due_date: null
       });
       expect(formatIterationName(iteration)).toBe('Iteration 789');
     });

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import gitlabService, { Iteration } from '../services/gitlabService';
 import { useSettingsStore } from '../store/useSettingsStore';
 import { generateAssigneeSummary } from '../services/aiService';
@@ -30,7 +30,7 @@ const IterationReport = () => {
 
   const { projectId, groupId, aiBackend } = useSettingsStore.getState();
 
-  const loadIterations = async (state?: 'opened' | 'current' | 'closed') => {
+  const loadIterations = useCallback(async (state?: 'opened' | 'current' | 'closed') => {
     if (!groupId && !projectId) {
       setMessage('Missing Group ID or Project ID in settings');
       return;
@@ -63,7 +63,7 @@ const IterationReport = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [projectId, groupId]);
 
   const groupIssuesByAssignee = (issues: any[]): AssigneeSummary[] => {
     const assigneeMap = new Map<string, Array<{ title: string; state: string; web_url: string }>>();
@@ -257,7 +257,7 @@ const IterationReport = () => {
   
   useEffect(() => {
     loadIterations(iterationState);
-  }, [iterationState]);
+  }, [iterationState, loadIterations]);
 
   const formatIterationOption = (iteration: Iteration) => {
     return formatIterationName(iteration);

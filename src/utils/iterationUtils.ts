@@ -21,7 +21,7 @@ export const formatIterationName = (iteration: Iteration): string => {
     const dueFormatted = dueDate.toLocaleDateString('en-US');
     
     return `${startFormatted} - ${dueFormatted}`;
-  } catch (error) {
+  } catch {
     return `Iteration ${iteration.id}`;
   }
 };

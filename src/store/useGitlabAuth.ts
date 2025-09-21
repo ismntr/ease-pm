@@ -94,7 +94,8 @@ export const useGitlabAuth = create<GitlabAuthState>((set, get) => ({
           popup.close();
           clearInterval(interval);
         }
-      } catch (_) {
+      } catch {
+        // Ignore errors when polling for token
       }
     }, 500);
   },

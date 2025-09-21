@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest'
 
-const groupIssuesByAssignee = (issues: any[]) => {
+interface Issue {
+  title: string;
+  state: string;
+  web_url: string;
+  labels?: string[];
+}
+
+const groupIssuesByAssignee = (issues: Issue[]) => {
   const assigneeMap = new Map<string, Array<{ title: string; state: string; web_url: string }>>();
   
   issues.forEach(issue => {

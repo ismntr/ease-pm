@@ -34,7 +34,7 @@ const IssueGenerator = () => {
     if (projectId && labels.length === 0) {
       fetchLabels();
     }
-  }, [projectId]);
+  }, [projectId, labels.length]); // Added labels.length as dependency
 
   const debouncedSearchEpics = useMemo(
     () =>
@@ -73,7 +73,7 @@ const IssueGenerator = () => {
     } else {
       setEpicResults([]);
     }
-  }, [epicQuery, enableEpic, debouncedSearchEpics, setEpic]);
+  }, [epicQuery, enableEpic, debouncedSearchEpics, setEpic, groupId]);
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;

@@ -68,24 +68,24 @@ const GitlabSettings: React.FC = () => {
             <strong>Navigate to GitLab Applications:</strong>
             <ul className="list-disc list-inside ml-4">
               <li>Go to your GitLab profile settings (e.g., <code>https://gitlab.com/-/user_settings/profile</code>).</li>
-              <li>Select "Applications" from the sidebar.</li>
+              <li>Select &quot;Applications&quot; from the sidebar.</li>
             </ul>
           </li>
           <li>
             <strong>Create a new application:</strong>
             <ul className="list-disc list-inside ml-4">
-              <li>Click "New application".</li>
-              <li><strong>Name:</strong> Give your application a descriptive name (e.g., "Ease GitLab").</li>
-              <li><strong>Redirect URI:</strong> This must match the "Callback URL" you provide in the settings. For local development, this is often <code>http://localhost:5173</code>. You must add this URI to the application settings in GitLab.</li>
+              <li>Click &quot;New application&quot;.</li>
+              <li><strong>Name:</strong> Give your application a descriptive name (e.g., &quot;Ease GitLab&quot;).</li>
+              <li><strong>Redirect URI:</strong> This must match the &quot;Callback URL&quot; you provide in the settings. For local development, this is often <code>http://localhost:5173</code>. You must add this URI to the application settings in GitLab.</li>
               <li><strong>Confidential:</strong> Leave this unchecked.</li>
               <li><strong>Scopes:</strong> Select the <code>api</code> scope. This grants the application access to the full API.</li>
-              <li>Click "Save application".</li>
+              <li>Click &quot;Save application&quot;.</li>
             </ul>
           </li>
           <li>
             <strong>Copy the credentials:</strong>
             <ul className="list-disc list-inside ml-4">
-              <li>After creating the application, you will see an <strong>Application ID</strong>. Copy this value and paste it into the "Application ID" field.</li>
+              <li>After creating the application, you will see an <strong>Application ID</strong>. Copy this value and paste it into the &quot;Application ID&quot; field.</li>
               <li>The <strong>GitLab Host</strong> is the URL of your GitLab instance (e.g., <code>https://gitlab.com</code>).</li>
               <li>The <strong>Callback URL</strong> is the Redirect URI you configured in the GitLab application.</li>
             </ul>

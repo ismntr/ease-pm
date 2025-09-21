@@ -7,8 +7,8 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 const LabelsSettings = () => {
-  const { labels, setLabels, issueKeywords, epicKeywords, setIssueKeywords, setEpicKeywords } = useLabelStore();
-  const [allLabels, setAllLabels] = useState<typeof labels>([]);
+  const { setLabels, issueKeywords, epicKeywords, setIssueKeywords, setEpicKeywords } = useLabelStore();
+  const [allLabels, setAllLabels] = useState<Array<{ name: string; color: string }>>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -28,8 +28,8 @@ const LabelsSettings = () => {
       const all = await gitlabService.fetchLabels(projectId);
       setAllLabels(all);
       setMessage(`Fetched ${all.length} labels. Set filter keywords to preview filtered results.`);
-    } catch (err: any) {
-      setMessage(err.message || "Failed to fetch labels");
+    } catch (err: unknown) {
+      setMessage((err as Error).message || "Failed to fetch labels");
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { MainTab } from '../store/useTabStore';
 import { useSidebarStore } from '../store/useSidebarStore';
 import Tooltip from './ui/Tooltip';

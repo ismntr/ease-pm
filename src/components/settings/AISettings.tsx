@@ -1,4 +1,4 @@
-import { useSettingsStore } from '../../store/useSettingsStore';
+import { useSettingsStore, AIBackend } from '../../store/useSettingsStore';
 import { Input, Select, Label } from '../ui';
 
 
@@ -14,7 +14,7 @@ const AISettings = () => {
       <Label>Select backend</Label>
       <Select
         value={aiBackend}
-        onChange={e => setBackend(e.target.value as any)}
+        onChange={e => setBackend(e.target.value as AIBackend)}
       >
         <option value="openai">OpenAI</option>
         <option value="gemini">Google Gemini</option>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import gitlabService from '../services/gitlabService';
 import { useSettingsStore } from '../store/useSettingsStore';
 import { Select, Textarea, Button, Input, Label, buttonVariants } from './ui';
@@ -24,7 +24,7 @@ const MilestoneReport = () => {
 
   const {projectId, groupId} = useSettingsStore.getState();
 
-  const loadMilestones = async () => {
+  const loadMilestones = useCallback(async () => {
     if (!projectId) {
       setMessage('Missing VITE_GITLAB_PROJECT_ID');
       return;
@@ -39,11 +39,11 @@ const MilestoneReport = () => {
       }
       setMilestones(data);
     } catch (err: unknown) {
-      setMessage(err.message || 'Failed to load milestones');
+      setMessage((err as Error).message || 'Failed to load milestones');
     } finally {
       setLoading(false);
     }
-  };
+  }, [projectId, groupId]);
 
   const loadIssuesAndSummary = async (milestone: Milestone) => {
 
@@ -104,7 +104,7 @@ const MilestoneReport = () => {
   };
   useEffect(() => {
     loadMilestones();
-  }, []);
+  }, [loadMilestones]);
 
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-6">
